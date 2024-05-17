@@ -177,7 +177,8 @@ class Toggl:
 
     def createTimeEntry(self, hour_duration: int, wid: NumStr, description: str=None, project_id: NumStr=None,
             projectname: str=None, task_id: NumStr=None, client_name: str=None, year: int=None, month: int=None,
-            day: int=None, hour: int=None, billable: bool=False, hour_diff: int=-2) -> TogglResponse:
+            day: int=None, hour: int=None, billable: bool=False, hour_diff: int=-2, tag: Optional[str]=None
+        ) -> TogglResponse:
         """
         Creating a custom time entry, minimum must is hour duration and project param
         :param hour_duration: Duration of the time entry in hours.
@@ -210,8 +211,12 @@ class Toggl:
         day = datetime.now().day if not day else day
         hour = datetime.now().hour if not hour else hour
 
+        tags = []
+        if tag: tags.append(tag)
+
         timestruct = datetime(year, month, day, hour + hour_diff).isoformat() + '.000Z'
         time_entry = {
+            'tags': tags,
             'start': timestruct,
             'duration': hour_duration * 3600,
             'pid': int(project_id),
