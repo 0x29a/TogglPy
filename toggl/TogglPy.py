@@ -218,7 +218,8 @@ class Toggl:
         time_entry = {
             'tags': tags,
             'start': timestruct,
-            'duration': hour_duration * 3600,
+            'duration': int(hour_duration * 3600),
+            'workspace_id': int(wid),
             'pid': int(project_id),
             'created_with': 'NAME',
             'billable': billable
